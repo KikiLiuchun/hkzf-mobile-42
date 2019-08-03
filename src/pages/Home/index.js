@@ -29,6 +29,18 @@ class Home extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    // console.log(prevProps)
+    // console.log(this.props)
+    // console.log('home组件发生了更新')
+    // 更新阶段不能直接调用setState的，需要有条件
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      this.setState({
+        selectedTab: this.props.location.pathname
+      })
+    }
+  }
+
   renderItem() {
     return itemList.map(item => (
       <TabBar.Item
@@ -39,9 +51,6 @@ class Home extends React.Component {
         selected={this.state.selectedTab === item.path}
         onPress={() => {
           this.props.history.push(item.path)
-          this.setState({
-            selectedTab: item.path
-          })
         }}
       />
     ))
